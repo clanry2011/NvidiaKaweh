@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nvidiakaweh</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,sans-serif;
+    }
+
+    body{
+      background:#000;
+      color:#fff;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:999;
+      background:#000;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 60px;
+    }
+
+    .logo h1{font-size:2rem; margin:0;}
+    .logo .n{color:#fff;}
+    .logo .rest{color:#76b900;}
+    .logo p{margin-top:5px; color:#d1d5db; font-size:0.9rem;}
+
+    nav{
+      position:relative;
+      display:flex;
+      gap:25px;
+    }
+
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:bold;
+      padding:6px 0;
+    }
+
+    nav a.active{color:#76b900;}
+
+    .indicator{
+      position:absolute;
+      bottom:-6px;
+      height:3px;
+      width:60px;
+      background:#76b900;
+      transition:0.3s;
+      left:0;
+    }
+
+    .hero{
+      margin-top:80px;
+      margin-bottom:80px;
+      background:linear-gradient(rgba(0,0,0,0.55),rgba(0,0,0,0.70)),url('https://s159-isny.freeconvert.com/task/69ef8507f7374f240f51f2c2/NVIDIA-GeForce-RTX-5090.jpg');
+      background-size:cover;
+      min-height:650px;
+      background-position:center;
+      padding:80px 60px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .hero .line1{font-size:4rem;font-weight:bold;color:#fff;}
+    .hero .line2{font-size:4rem;font-weight:bold;color:#76b900;}
+    .hero .line3{font-size:1.6rem;font-weight:bold;color:#ddd;margin-top:5px;}
+
+    .hero p{
+      max-width:750px;
+      margin-top:15px;
+      color:#d1d5db;
+      font-size:1.1rem;
+      line-height:1.7;
+    }
+
+    .btn{
+      display:inline-block;
+      margin-top:25px;
+      padding:10px 14px;
+      background:#76b900;
+      color:#000;
+      font-weight:bold;
+      border-radius:6px;
+      text-decoration:none;
+      width:max-content;
+    }
+
+    .section-title{
+      text-align:center;
+      margin:70px 0 30px;
+      color:#76b900;
+      font-size:2rem;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:60px;
+      padding:40px;
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      background:#111;
+      border:1px solid #222;
+      border-radius:12px;
+    }
+
+    .card img{
+      width:100%;
+      height:600px;
+      object-fit:cover;
+    }
+
+    .overlay{
+      position:absolute;
+      left:60px;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(0,0,0,0.6);
+      padding:25px;
+      max-width:520px;
+    }
+
+    .overlay h3{color:#76b900;font-size:1.8rem;}
+    .overlay p{margin-top:10px;color:#d1d5db;line-height:1.8;}
+
+    .price{
+      position:absolute;
+      bottom:30px;
+      left:60px;
+      font-size:2rem;
+      font-weight:bold;
+      background:rgba(0,0,0,0.7);
+      padding:10px 15px;
+      border-left:4px solid #76b900;
+    }
+
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:20px;
+      padding:40px;
+    }
+
+    .product-card{
+      position:relative;
+      background:#111;
+      border:1px solid #222;
+      border-radius:12px;
+      overflow:hidden;
+      transition:0.3s;
+    }
+
+    .product-card:hover{transform:translateY(-8px);border-color:#76b900;}
+
+    .product-card img{width:100%;height:180px;object-fit:cover;}
+
+    .product-card .info{padding:12px;}
+
+    .product-card h3{color:#76b900;margin-bottom:6px;}
+
+    .product-card p{color:#ccc;font-size:0.85rem;line-height:1.4;}
+
+    .product-card .price{
+      position:absolute;
+      top:10px;
+      right:10px;
+      background:rgba(0,0,0,0.75);
+      border-left:3px solid #76b900;
+      padding:6px 10px;
+      font-weight:bold;
+      font-size:0.85rem;
+      color:#fff;
+      border-radius:6px;
+      opacity:0;
+      transition:0.3s;
+      pointer-events:none;
+    }
+
+    .product-card:hover .price{opacity:1;}
+
+    .about{
+      position:relative;
+      padding:140px 60px;
+      text-align:center;
+      overflow:hidden;
+      margin-top:60px;
+    }
+
+    .about::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:url('https://s159-isny.freeconvert.com/task/69ef8507f7374f240f51f2c2/NVIDIA-GeForce-RTX-5090.jpg');
+      background-size:cover;
+      background-position:center;
+      opacity:0.12;
+    }
+
+    .about h2{position:relative;color:#76b900;margin-bottom:20px;}
+    .about p{position:relative;max-width:950px;margin:auto;color:#ccc;line-height:1.9;font-size:1.1rem;}
+
+    .why{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+      padding:40px;
+    }
+
+    .why .box{
+      background:#111;
+      padding:25px;
+      border:1px solid #222;
+      border-radius:10px;
+    }
+
+    .why h3{color:#76b900;margin-bottom:10px;}
+    .why p{color:#ccc;font-size:0.95rem;line-height:1.7;}
+
+    footer{text-align:center;padding:25px;color:#aaa;}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <h1><span class="n">N</span><span class="rest">VIDIAKAWEH</span></h1>
+    <p>Power Your Performance</p>
+  </div>
+
+  <nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#best">Best Product</a>
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <div class="indicator"></div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="line1">GEFORCE RTX</div>
+  <div class="line2">5090</div>
+  <div class="line3">THE ULTIMATE GEFORCE GPU</div>
+  <p>Next-generation performance with AI acceleration, ray tracing realism, and extreme power for gaming, editing, and professional workloads without limits.</p>
+  <a class="btn" href="#best">View Details</a>
+</section>
+
+<h2 class="section-title" id="best">Best Products</h2>
+
+<section class="cards">
+
+  <div class="card">
+    <img src="https://s159-isny.freeconvert.com/task/69ef8507f7374f240f51f2c2/NVIDIA-GeForce-RTX-5090.jpg">
+    <div class="overlay">
+      <h3>RTX 5090</h3>
+      <p>The RTX 5090 is the absolute flagship of next-generation graphics technology, built for extreme 4K and 8K gaming, advanced AI workloads, real-time rendering, and professional-grade simulation tasks. It delivers unmatched performance, massive VRAM capacity, and cutting-edge ray tracing capabilities designed for creators and gamers who demand the highest level of power without compromise.</p>
+    </div>
+    <div class="price">Rp 42.999.000</div>
+  </div>
+
+  <div class="card">
+    <img src="https://cdn.neowin.com/news/images/uploaded/2025/01/1737649543_rtx_5080.jpg">
+    <div class="overlay">
+      <h3>RTX 5080</h3>
+      <p>The RTX 5080 delivers high-end performance for modern gaming and content creation, offering excellent ray tracing performance, fast rendering speeds, and efficient power usage. It is ideal for users who want near-flagship performance at a more balanced efficiency level.</p>
+    </div>
+    <div class="price">Rp 28.999.000</div>
+  </div>
+
+  <div class="card">
+    <img src="https://www.connect-living.de/bilder/118554067/landscapex1600-c2/Geforce-RTX-4090-Ti-release-preis-specs.jpg">
+    <div class="overlay">
+      <h3>RTX 4090</h3>
+      <p>The RTX 4090 is a professional-grade powerhouse GPU designed for heavy rendering, AI processing, and ultra-high resolution gaming. It provides exceptional stability under extreme workloads, making it a top choice for creators and professionals.</p>
+    </div>
+    <div class="price">Rp 31.500.000</div>
+  </div>
+
+  <div class="card">
+    <img src="https://s96-ious.freeconvert.com/task/69ef86a6b028bb7734d101bc/Screenshot_20240108_232516_YouTube-e1704753932992.png">
+    <div class="overlay">
+      <h3>RTX 4080 Super</h3>
+      <p>The RTX 4080 Super provides a perfect balance between performance and efficiency, offering smooth high-FPS gaming, strong rendering capability, and optimized power consumption for long-term use.</p>
+    </div>
+    <div class="price">Rp 19.999.000</div>
+  </div>
+
+</section>
+
+<h2 class="section-title" id="products">Products</h2>
+
+<section class="product-grid">
+
+  <div class="product-card">
+    <img src="https://s159-isny.freeconvert.com/task/69ef8507f7374f240f51f2c2/NVIDIA-GeForce-RTX-5090.jpg">
+    <div class="info"><h3>RTX 5090</h3><p>Flagship extreme GPU for professionals.</p></div>
+    <div class="price">Rp 42.999.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://cdn.neowin.com/news/images/uploaded/2025/01/1737649543_rtx_5080.jpg">
+    <div class="info"><h3>RTX 5080</h3><p>High performance gaming GPU.</p></div>
+    <div class="price">Rp 28.999.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.connect-living.de/bilder/118554067/landscapex1600-c2/Geforce-RTX-4090-Ti-release-preis-specs.jpg">
+    <div class="info"><h3>RTX 4090</h3><p>Creator and gaming powerhouse.</p></div>
+    <div class="price">Rp 31.500.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://s96-ious.freeconvert.com/task/69ef86a6b028bb7734d101bc/Screenshot_20240108_232516_YouTube-e1704753932992.png">
+    <div class="info"><h3>RTX 4080 Super</h3><p>Balanced flagship GPU.</p></div>
+    <div class="price">Rp 19.999.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://cdn.wccftech.com/wp-content/uploads/2025/01/geforce-rtx-5070-3840x2160-Custom.jpg">
+    <div class="info"><h3>RTX 5070</h3><p>Next-gen smooth gaming performance.</p></div>
+    <div class="price">Rp 15.999.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://www.pcgamesn.com/wp-content/sites/pcgamesn/2023/04/nvidia-rtx-4070-official-release-date-confirmed.jpg">
+    <div class="info"><h3>RTX 4070</h3><p>Efficient high FPS gaming GPU.</p></div>
+    <div class="price">Rp 11.999.000</div>
+  </div>
+
+  <div class="product-card">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.BQxk-wHi1CtCQaz-yptp7AHaEK">
+    <div class="info"><h3>RTX 4060 Ti</h3><p>Budget friendly gaming performance GPU.</p></div>
+    <div class="price">Rp 7.999.000</div>
+  </div>
+
+</section>
+
+<section class="about" id="about">
+  <h2>About Nvidiakaweh</h2>
+  <p>
+    Nvidiakaweh is a premium technology platform focused on delivering high-end GPU solutions, gaming systems, and creator workstations. 
+    We aim to provide powerful computing solutions for gamers, designers, video editors, and professionals who demand extreme performance. 
+    Every product and recommendation is carefully curated to ensure stability, efficiency, and future-proof performance in modern workloads.
+  </p>
+</section>
+
+<h2 class="section-title">Why Choose Us</h2>
+
+<section class="why">
+  <div class="box"><h3>Free Consultation</h3><p>We provide detailed and personalized guidance to help you choose the perfect GPU or PC build based on your needs, budget, and performance goals.</p></div>
+  <div class="box"><h3>Official Products</h3><p>All products are 100% original and sourced from trusted distributors with official warranty and guaranteed authenticity.</p></div>
+  <div class="box"><h3>High Performance</h3><p>We focus on delivering only high-performance hardware that can handle gaming, rendering, AI tasks, and professional workloads smoothly.</p></div>
+  <div class="box"><h3>Trusted Support</h3><p>Our support team is available before and after purchase to ensure your system runs optimally and any issues are quickly resolved.</p></div>
+</section>
+
+<footer>© 2026 Nvidiakaweh | Future Performance Starts Here</footer>
+
+<script>
+const indicator=document.getElementById('indicator');
+const links=document.querySelectorAll('nav a');
+
+links.forEach(a=>{
+  a.addEventListener('click',()=>{
+    links.forEach(x=>x.classList.remove('active'));
+    a.classList.add('active');
+    indicator.style.width=a.offsetWidth+'px';
+    indicator.style.left=a.offsetLeft+'px';
+  });
+});
+</script>
+
+</body>
+</html>
